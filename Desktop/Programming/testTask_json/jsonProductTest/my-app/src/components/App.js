@@ -137,7 +137,7 @@ class App extends Component {
                 </ReactBootstrap.Pagination>
 
 
-                <div className="App" style={{paddingBottom: '40px'}}>
+                <div className="Categories" style={{paddingBottom: '40px'}}>
 
 
                     <ReactBootstrap.Grid>
