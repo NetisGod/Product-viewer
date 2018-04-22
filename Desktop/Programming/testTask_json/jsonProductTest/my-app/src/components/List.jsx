@@ -5,18 +5,24 @@ import {Panel, Image, Grid, Row, Col} from 'react-bootstrap';
 
 
 class List extends Component {
+
+
     render() {
         const goods = this.props.goods;
         let filtered = this.props.filtered;
+
+        if(this.props.goods.length === 0) return <div></div>;
+
 
 
         return (
             <div>
 
                 {
+
                     goods.map((g) => {
                         return (
-                            <Panel key={g.url} bsStyle='primary'>
+                            <Panel key={g.asin} bsStyle='primary'>
                                 <Panel.Heading>
                                     <Panel.Title componentClass="h3" className='primary'>{g.name}</Panel.Title>
                                 </Panel.Heading>

@@ -2,11 +2,12 @@ import React, {Component} from 'react';
 import List from '../components/List'
 import axios from 'axios';
 import SearchBar from './SearchBar'
+import Pagination from './Pagination'
 
 
 import * as ReactBootstrap from 'react-bootstrap';
 
-class App extends Component {
+export default class App extends Component {
     constructor(props) {
         super(props);
 
@@ -14,16 +15,15 @@ class App extends Component {
             goods: [],
             filteredGoods: [],
             category: 'All_categories',
-            per_page: 5,
-            pages: Number
-
+            categoryGoods: []
         };
 
 
         this.getGoods = this.getGoods.bind(this);
         this.handleClick = this.handleClick.bind(this);
-        this.handlePaginationClick = this.handlePaginationClick.bind(this);
         this.onChangeSearch = this.onChangeSearch.bind(this);
+        this.onPagination = this.onPagination.bind(this);
+
     }
 
     getGoods() {
@@ -32,7 +32,7 @@ class App extends Component {
                 this.setState({
                     goods: response.data.products,
                     filteredGoods: response.data.products,
-                    pages: Math.ceil(response.data.products.length / this.state.per_page)
+                    categoryGoods: response.data.products
                 })
             })
     }
@@ -52,44 +52,18 @@ class App extends Component {
         });
 
 
+        target.classList.add('active');
+
+        if(this.state.category  !== target.id){
+            document.getElementById(this.state.category).classList.remove('active');
+
+        }
+
         this.setState({
             category: target.id,
             filteredGoods: filteredGoods,
-            pages: Math.ceil(filteredGoods.length / this.state.per_page)
-
+            categoryGoods: filteredGoods
         });
-
-    }
-
-    handlePaginationClick(event) {
-
-        let current_page = event.target.id;
-        let start_offset = current_page * this.state.per_page - this.state.per_page;
-        let start_count = current_page * this.state.per_page - this.state.per_page;
-        let filteredGoods = this.state.goods;
-
-
-        (this.state.category === 'All_categories') ? filteredGoods : filteredGoods = filteredGoods.filter(item => {
-            return item.bsr_category === this.state.category;
-        });
-
-        filteredGoods = filteredGoods.filter((item, index) => {
-
-            if (index >= start_offset && start_count < current_page * this.state.per_page) {
-                console.log(start_count++);
-                console.log(item.bsr_category);
-
-
-                return item;
-            }
-        });
-        console.log('curr_page = ' + current_page + " start = " + start_offset + ' count = ' + start_count + ' category =' + this.state.category);
-        console.log(filteredGoods);
-
-        this.setState({
-            filteredGoods: filteredGoods
-        });
-
 
     }
 
@@ -97,48 +71,34 @@ class App extends Component {
     onChangeSearch(searchedResult) {
         this.setState({
             filteredGoods: searchedResult,
-            pages: Math.ceil(searchedResult.length / this.state.per_page)
+            categoryGoods: searchedResult
         });
     }
 
-
+    onPagination(filteredGoods) {
+        this.setState({
+            filteredGoods: filteredGoods
+        });
+    }
 
     render() {
-        const {goods, filteredGoods} = this.state;
+        const {goods, filteredGoods, category, categoryGoods} = this.state;
 
-        let categoriesArr = [],
-            pagesCount = [];
+        let categoriesArr = [];
 
         goods.map(item => {
             categoriesArr.push(item.bsr_category)
         });
 
-        //count pages
-        for (let i = 1; i <= this.state.pages; i++) {
-            pagesCount.push(i);
-        }
-
-
         return (
             <ReactBootstrap.Jumbotron>
 
-                <SearchBar onChangeSearch={this.onChangeSearch} goods={filteredGoods.length ? filteredGoods : goods}/>
+                <SearchBar onChangeSearch={this.onChangeSearch} goods={goods}/>
 
-                <ReactBootstrap.Pagination>
-                    <ReactBootstrap.Pagination.Prev/>
+                <Pagination onPagination={this.onPagination} categoryGoods={categoryGoods}
+                            goods={filteredGoods.length ? filteredGoods : goods} category={category}/>
 
-                    {pagesCount.map(item =>
-                        <ReactBootstrap.Pagination.Item onClick={this.handlePaginationClick}
-                                                        id={item}>{item}</ReactBootstrap.Pagination.Item>
-                    )
-                    }
-
-                    <ReactBootstrap.Pagination.Next/>
-                </ReactBootstrap.Pagination>
-
-
-                <div className="Categories" style={{paddingBottom: '40px'}}>
-
+                <div className="Categories" id='Categories' style={{paddingBottom: '40px'}}>
 
                     <ReactBootstrap.Grid>
                         <ReactBootstrap.Row>
@@ -171,15 +131,11 @@ class App extends Component {
                         </ReactBootstrap.Row>
                     </ReactBootstrap.Grid>
 
-
                 </div>
 
-
-                <List goods={filteredGoods.length ? filteredGoods : goods}/>
+                <List goods={filteredGoods}/>
 
             </ReactBootstrap.Jumbotron>
         );
     }
 }
-
-export default App;

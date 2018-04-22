@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import * as ReactBootstrap from 'react-bootstrap';
+import $ from 'jquery'
+
 
 export default class SearchBar extends Component {
     constructor(props) {
@@ -13,13 +15,6 @@ export default class SearchBar extends Component {
         this.handleChange = this.handleChange.bind(this);
 
     }
-
-
-    // componentWillReceiveProps(nextProps) {
-    //     this.setState({
-    //         goods: nextProps.goods
-    //     });
-    // }
 
     handleChange(e) {
         this.setState({value: e.target.value});
@@ -38,15 +33,17 @@ export default class SearchBar extends Component {
             }
         });
 
+
         return foundGoods;
     }
+
 
     render() {
 
 
         return (
 
-            <ReactBootstrap.FormGroup>
+            <ReactBootstrap.FormGroup >
 
                 <ReactBootstrap.FormControl
                     type="text"
