@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import * as ReactBootstrap from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
 
 
@@ -29,17 +30,6 @@ export default class CharInfo extends Component {
     render() {
         let info = this.props.charInfo;
 
-
-        // if (this.state.expanded) {
-        //     return  <ReactBootstrap.Grid className="hidden-md">
-        //                 <ReactBootstrap.Row className="show-grid">
-        //                     <ReactBootstrap.Button onClick={this.open}>Show info</ReactBootstrap.Button>
-        //                 </ReactBootstrap.Row>
-        //             </ReactBootstrap.Grid>
-        // }
-
-
-
         return(
                 <ReactBootstrap.Grid >
                     <ReactBootstrap.Row className="info">
@@ -66,3 +56,7 @@ export default class CharInfo extends Component {
         )
     }
 }
+
+    CharInfo.propTypes = {
+        charInfo: PropTypes.object.isRequired
+    };

@@ -1,18 +1,17 @@
 import React, {Component} from 'react';
 import CharInfo from '../components/CharInfo';
+import PropTypes from 'prop-types';
 
 import {Panel, Image, Grid, Row, Col} from 'react-bootstrap';
 
-
-class List extends Component {
+export default class List extends Component {
 
 
     render() {
         const goods = this.props.goods;
         let filtered = this.props.filtered;
 
-        if(this.props.goods.length === 0) return <div></div>;
-
+        if (this.props.goods.length === 0) return <div></div>;
 
 
         return (
@@ -56,4 +55,7 @@ class List extends Component {
     }
 }
 
-export default List;
+
+    List.propTypes = {
+        goods: PropTypes.array.isRequired
+    };

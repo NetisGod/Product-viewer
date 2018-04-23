@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types';
 import * as ReactBootstrap from 'react-bootstrap';
-import $ from 'jquery'
 
 
 export default class SearchBar extends Component {
@@ -18,6 +18,10 @@ export default class SearchBar extends Component {
 
     handleChange(e) {
         this.setState({value: e.target.value});
+
+        if(this.state.value.length !== 0) {
+            document.getElementById(this.props.category).classList.remove('active');
+        }
 
         let searchedResult = this.searcher(e.target.value);
         this.props.onChangeSearch(searchedResult);
@@ -59,3 +63,9 @@ export default class SearchBar extends Component {
     }
 
 }
+
+    SearchBar.propTypes = {
+        onChangeSearch: PropTypes.func,
+        goods: PropTypes.array.isRequired,
+        category: PropTypes.string.isRequired
+    };

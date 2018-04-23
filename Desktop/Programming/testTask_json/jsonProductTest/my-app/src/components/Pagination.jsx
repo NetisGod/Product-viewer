@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-
+import PropTypes from 'prop-types';
 import * as ReactBootstrap from 'react-bootstrap';
 
 
@@ -76,11 +76,8 @@ export default class Pagination extends Component {
     }
 }
 
-    Pagination.defaultProps = {
-        event : {
-            target : {
-                id : 1
-            }
-        }
-    };
+   Pagination.propTypes = {
+       categoryGoods: PropTypes.array.isRequired,
+       category: PropTypes.string
+   };
 
