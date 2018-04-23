@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types';
 import * as ReactBootstrap from 'react-bootstrap';
+import { Link } from 'react-router-dom'
 
 
 export default class Pagination extends Component {
@@ -44,7 +45,7 @@ export default class Pagination extends Component {
     render() {
 
         const {per_page} = this.state;
-        const {categoryGoods} = this.props;
+        const {categoryGoods, category} = this.props;
 
 
         //count pages
@@ -62,8 +63,13 @@ export default class Pagination extends Component {
                     <ReactBootstrap.Pagination.Prev/>
 
                     {pagesCount.map(item =>
+
                         <ReactBootstrap.Pagination.Item onClick={this.handlePaginationClick}
-                                                        id={item} key={item}>{item}</ReactBootstrap.Pagination.Item>
+                                                        id={item} key={item}>
+                            <Link to={`/categories/${category}/${item}`}>
+                            {item}
+                            </Link>
+                            </ReactBootstrap.Pagination.Item>
                     )
                     }
 

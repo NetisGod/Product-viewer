@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types';
 import * as ReactBootstrap from 'react-bootstrap';
 import Pagination from "./Pagination";
+import { Link } from 'react-router-dom'
 
 
 export default class Categories extends Component{
@@ -50,12 +51,14 @@ export default class Categories extends Component{
                 <ReactBootstrap.Grid>
                     <ReactBootstrap.Row>
 
-                        <ReactBootstrap.Col sm={6} md={4} lg={3}>
-                            <button type='button' className='btn btn-warning' onClick={this.handleClick}
-                                    id={'All_categories'} style={{width: '180px'}}>All categories
-                            </button>
+                        <Link to={`/categories/All_categories`}>
+                            <ReactBootstrap.Col sm={6} md={4} lg={3}>
+                                <button type='button' className='btn btn-warning' onClick={this.handleClick}
+                                        id={'All_categories'} style={{width: '180px'}}>All categories
+                                </button>
 
-                        </ReactBootstrap.Col>
+                            </ReactBootstrap.Col>
+                        </Link>
 
 
                         {categoriesArr.filter((item, index, self) => {
@@ -63,16 +66,18 @@ export default class Categories extends Component{
                         }).map(item =>
 
 
-                            <ReactBootstrap.Col sm={6} md={4} lg={3} key={item}>
-                                <button
-                                    type="button"
-                                    style={{width: '180px'}}
-                                    className="btn btn-primary btn-sm"
-                                    onClick={this.handleClick}
-                                    id={item}>
-                                    {item}
-                                </button>
-                            </ReactBootstrap.Col>
+                            <Link to={`/categories/${item}`}>
+                                <ReactBootstrap.Col sm={6} md={4} lg={3} key={item}>
+                                    <button
+                                        type="button"
+                                        style={{width: '180px'}}
+                                        className="btn btn-primary btn-sm"
+                                        onClick={this.handleClick}
+                                        id={item}>
+                                        {item}
+                                    </button>
+                                </ReactBootstrap.Col>
+                            </Link>
                         )}
                     </ReactBootstrap.Row>
                 </ReactBootstrap.Grid>
